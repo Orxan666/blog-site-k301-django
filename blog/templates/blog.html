@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% load static %}
+
+
+
+{% block main %}
+
+{% static 'assets/img/post-bg.jpg' as blog_bg %}
+{% include 'includes/banner.html' with banner_title='Blog' banner_description='Blog sehifesine xos geldiniz' banner_image=blog_bg %}
+     
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+
+                <div class="col-md-3 col-lg-2 col-xl-3">
+                    <h1>Authors</h1>
+                    <ul>
+                        {% for author in authors %}
+                        
+                        <li><a href="?author={{author.user.username}}">{{author.user.get_full_name}}</a></li>
+
+                        {% endfor %}
+                    </ul>
+                    <h1>Tags</h1>
+                    <ul>
+                        {% for tag in tags %}
+                        <li><a href="?tag={{tag.title}}">{{tag.title}}</a></li>
+                        
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col-md-9 col-lg-8 col-xl-9">
+                    <!-- Post preview-->
+
+
+
+                    {% for article in articles  %}
+                    
+                    
+                    <div class="post-preview">
+
+                        <a href="{% url 'blog:blog-detail' id=article.id %}">
+                            <h2 class="post-title">{{article.title}}</h2>
+                            <h3 class="post-subtitle">{{article.description}}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#">{{article.author.user.get_full_name}}</a>
+                            on  {{article.created}}
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    
+                    {% endfor %}
+
+                    <!-- Post preview-->
+          
+
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer-->
+
+{% endblock main %}
